@@ -50,7 +50,7 @@ public abstract class WorkOutRoomDatabase extends RoomDatabase {
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
         private final PushupDao mDao;
-        long[] pushes = {25,30,40,10,50,20,10,15};
+        long[] pushes = {25,30,40,10,50,20,10,15,12,5135,4123,12,443,21};
 
         PopulateDbAsync(WorkOutRoomDatabase db) {
             mDao = db.pushupDao();
