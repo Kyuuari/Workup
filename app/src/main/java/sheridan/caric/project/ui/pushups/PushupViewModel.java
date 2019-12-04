@@ -23,4 +23,11 @@ public class PushupViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Pushup>> getAllPushups() { return mAllPushups; }
+    public void insert(Pushup pushup){
+        mRepository.insert(pushup);
+    }
+    public void edit(Pushup pushup){}
+    public void deleteAll(){mRepository.deleteAllPushups();}
+    public void deleteById(Pushup pushup){mRepository.deletePushup(pushup);}
+
 }

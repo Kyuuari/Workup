@@ -19,16 +19,10 @@ public class RunFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         runViewModel =
                 ViewModelProviders.of(this).get(RunViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_run, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        runViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+        View view = inflater.inflate(R.layout.fragment_run, container, false);
+        return view;
     }
 }

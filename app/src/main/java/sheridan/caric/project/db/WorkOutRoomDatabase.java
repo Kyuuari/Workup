@@ -9,9 +9,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities ={Pushup.class},version = 1,exportSchema = false)
+@Database(entities ={Pushup.class,Run.class},version = 1,exportSchema = false)
 public abstract class WorkOutRoomDatabase extends RoomDatabase {
     public abstract PushupDao pushupDao();
+    public abstract RunDao runDao();
     private static WorkOutRoomDatabase INSTANCE;
 
     public static WorkOutRoomDatabase getDatabase(final Context context) {
@@ -49,11 +50,13 @@ public abstract class WorkOutRoomDatabase extends RoomDatabase {
     //Inner Class
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
-        private final PushupDao mDao;
+        private final RunDao runDao;
+        private final PushupDao pushupDao;
         long[] pushes = {25,30,40,10,50,20,10,15,12,5135,4123,12,443,21};
 
         PopulateDbAsync(WorkOutRoomDatabase db) {
-            mDao = db.pushupDao();
+            pushupDao = db.pushupDao();
+            runDao = db.runDao();
         }
 
         @Override
@@ -61,11 +64,11 @@ public abstract class WorkOutRoomDatabase extends RoomDatabase {
             // Start the app with a clean database every time.
             // Not needed if you only populate the database
             // when it is first created
-            mDao.deleteAll();
+            pushupDao.deleteAllPushups();
 
             for (int i = 0; i <= pushes.length - 1; i++) {
                 Pushup pushup = new Pushup(pushes[i]);
-                mDao.insert(pushup);
+                pushupDao.insert(pushup);
             }
             return null;
         }

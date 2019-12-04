@@ -28,6 +28,8 @@ public class WorkOutRepository {
     public void insert (Pushup pushup) {
         new insertAsyncTask(mPushupDao).execute(pushup);
     }
+    public void deleteAllPushups(){new DeleteAllPushupsAsyncTask(mPushupDao).execute();}
+    public void deletePushup(Pushup pushup){new DeletePushupAsyncTask(mPushupDao).execute(pushup);}
 
     //Inner Class
     private static class insertAsyncTask extends AsyncTask<Pushup, Void, Void> {
@@ -41,6 +43,34 @@ public class WorkOutRepository {
         @Override
         protected Void doInBackground(final Pushup... params) {
             mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteAllPushupsAsyncTask extends AsyncTask<Void,Void,Void>{
+        private PushupDao pushupDao;
+
+        DeleteAllPushupsAsyncTask(PushupDao pushupDao){
+            this.pushupDao = pushupDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            pushupDao.deleteAllPushups();
+            return null;
+        }
+    }
+
+    private static class DeletePushupAsyncTask extends AsyncTask<Pushup,Void,Void>{
+        private PushupDao pushupDao;
+
+        private DeletePushupAsyncTask(PushupDao pushupDao){
+            this.pushupDao = pushupDao;
+        }
+
+        @Override
+        protected Void doInBackground(Pushup... pushups) {
+            pushupDao.deletePushup(pushups[0]);
             return null;
         }
     }
