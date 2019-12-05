@@ -2,6 +2,7 @@ package sheridan.caric.project.db;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -50,9 +51,11 @@ public abstract class WorkOutRoomDatabase extends RoomDatabase {
     //Inner Class
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
-        private final RunDao runDao;
+
         private final PushupDao pushupDao;
-        long[] pushes = {25,30,40,10,50,20,10,15,12,5135,4123,12,443,21};
+        private final RunDao runDao;
+        long[] pushes = {25,30,40,10};
+        long[] runs = {25,43,10,12};
 
         PopulateDbAsync(WorkOutRoomDatabase db) {
             pushupDao = db.pushupDao();
@@ -62,13 +65,18 @@ public abstract class WorkOutRoomDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
             // Start the app with a clean database every time.
-            // Not needed if you only populate the database
-            // when it is first created
             pushupDao.deleteAllPushups();
+            runDao.deleteAllRuns();
+
+            for (int i = 0; i <= runs.length - 1; i++) {
+                Run run = new Run(runs[i]);
+                runDao.insert(run);
+            }
 
             for (int i = 0; i <= pushes.length - 1; i++) {
                 Pushup pushup = new Pushup(pushes[i]);
                 pushupDao.insert(pushup);
+//                Log.d("PushupID", "insert: " + pushup.getId());
             }
             return null;
         }

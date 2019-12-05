@@ -9,6 +9,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 @Dao
 public interface PushupDao {
@@ -17,6 +18,9 @@ public interface PushupDao {
 
     @Delete
     void deletePushup(Pushup pushup);
+
+    @Update
+    void updatePushup(Pushup pushup);
 
     @Query("DELETE FROM pushup_table WHERE id = :id")
     void deletePushupById(long id);

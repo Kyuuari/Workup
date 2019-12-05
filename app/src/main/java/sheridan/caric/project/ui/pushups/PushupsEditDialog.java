@@ -1,4 +1,4 @@
-package sheridan.caric.project.ui;
+package sheridan.caric.project.ui.pushups;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -26,9 +26,10 @@ public class PushupsEditDialog extends DialogFragment {
     private EditText input;
     private long aLong;
     private AlertDialog a;
-    private long p;
+    private Pushup p;
 
-    public PushupsEditDialog(){
+    public PushupsEditDialog(Pushup pushup) {
+        p = pushup;
     }
 
     @Override
@@ -37,20 +38,31 @@ public class PushupsEditDialog extends DialogFragment {
         pushupViewModel =
                 ViewModelProviders.of(this).get(PushupViewModel.class);
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        Toast.makeText(getContext(),"hello world",Toast.LENGTH_SHORT).show();
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setView(inflater.inflate(R.layout.dialog_edit_pushup,null));
+        builder.setView(inflater.inflate(R.layout.dialog_edit_pushup, null));
 
         builder.setPositiveButton("OK", (dialog, which) -> {
-            input = a.findViewById(R.id.Amount);
-            aLong = Long.valueOf(input.getText().toString());
-            pushupViewModel.insert(new Pushup(aLong));
+
+            try {
+                input = a.findViewById(R.id.Amount);
+                aLong = Long.valueOf(input.getText().toString());
+
+                long id = p.getId();
+                Pushup updatePushup = new Pushup(aLong);
+                updatePushup.setId(id);
+
+                pushupViewModel.update(updatePushup);
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "Unable to make changes", Toast.LENGTH_SHORT).show();
+            }
+
         });
 
-        builder.setNegativeButton("Delete All",(dialog, which) -> {
-          // pushupViewModel.deleteById();
-           Toast.makeText(getContext(),"Deleted",Toast.LENGTH_SHORT).show();
+        builder.setNegativeButton("Delete", (dialog, which) -> {
+            pushupViewModel.deleteByPushup(p);
+            Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
         });
 
         a = builder.create();

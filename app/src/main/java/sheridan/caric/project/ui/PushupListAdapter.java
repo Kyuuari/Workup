@@ -2,6 +2,7 @@ package sheridan.caric.project.ui;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,9 @@ public class PushupListAdapter extends RecyclerView.Adapter<PushupListAdapter.Pu
             Pushup current = mPushups.get(position);
             holder.pushupsItemView.setText(String.valueOf(current.getAmount()));
             holder.pushupsItemView.setId(position);
+
+            //bind holder with pushup
+            holder.setPushup(current);
         } else {
             // Covers the case of data not being ready yet.
             holder.pushupsItemView.setText("No Pushups Set");
@@ -57,11 +61,6 @@ public class PushupListAdapter extends RecyclerView.Adapter<PushupListAdapter.Pu
         notifyDataSetChanged();
     }
 
-    public void openDialog(){
-        FragmentManager manager = ((AppCompatActivity)itemView.getContext()).getSupportFragmentManager();
-        DialogFragment frag = new PushupsEditDialog();
-        frag.show(manager,"Hello");
-    }
 
     public void setOnItemClickListener(View.OnClickListener itemClickListener) {
         mOnItemClickListener = itemClickListener;
@@ -77,7 +76,7 @@ public class PushupListAdapter extends RecyclerView.Adapter<PushupListAdapter.Pu
         else return 0;
     }
 
-    class PushupViewHolder extends RecyclerView.ViewHolder {
+    public class PushupViewHolder extends RecyclerView.ViewHolder {
         private final TextView pushupsItemView;
         private Pushup pushup;
 
@@ -91,6 +90,8 @@ public class PushupListAdapter extends RecyclerView.Adapter<PushupListAdapter.Pu
         public void setPushup(Pushup pushup) {
             this.pushup = pushup;
         }
+
+        public Pushup getPushup(){return this.pushup;}
     }
 
 

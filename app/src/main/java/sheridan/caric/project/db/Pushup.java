@@ -9,9 +9,8 @@ import androidx.room.PrimaryKey;
 public class Pushup {
 
     @PrimaryKey(autoGenerate = true)
-    @NonNull
     @ColumnInfo(name = "id")
-    private long id;
+    private long id =0;
 
 
 

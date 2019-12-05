@@ -1,16 +1,12 @@
 package sheridan.caric.project.ui.pushups;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -27,25 +23,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import sheridan.caric.project.R;
 import sheridan.caric.project.db.Pushup;
 import sheridan.caric.project.ui.PushupListAdapter;
-import sheridan.caric.project.ui.PushupsEditDialog;
 
 public class PushupFragment extends Fragment {
 
     private PushupViewModel pushupViewModel;
     private List<Pushup> mPushups;
     private RecyclerView recyclerView;
+
     private View.OnClickListener onItemClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
-                RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
+                PushupListAdapter.PushupViewHolder viewHolder = (PushupListAdapter.PushupViewHolder) v.getTag();
                 long position = viewHolder.getAdapterPosition();
+                long a = viewHolder.getPushup().getId();
+                Pushup p = viewHolder.getPushup();
+
+                openEditDialog(p);
+                //pushupViewModel.deleteByPushup(p);
                 //pushupViewModel.deleteById();
+                //viewHolder.getItemId();
                 //viewHolder.getItemId();
                 //viewHolder.getItemViewType();
                 //viewHolder.itemView;
                 //TestItem thisItem = mTestItemList.get(position)
-                Toast.makeText(getContext(), "You Clicked: " + position, Toast.LENGTH_SHORT).show();
+               //Toast.makeText(getContext(), "You Clicked: " + a, Toast.LENGTH_SHORT).show();
 
         }
     };
@@ -59,11 +61,6 @@ public class PushupFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_pushup, container, false);
         recyclerView = view.findViewById(R.id.recyclerview);
-
-
-        //listener for fab
-//        FloatingActionButton fab = view.findViewById(R.id.fab);
-//        fab.setOnClickListener(v -> addPushups());
 
         final PushupListAdapter adapter = new PushupListAdapter(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -94,7 +91,7 @@ public class PushupFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add:
-                openDialog();
+                openAddDialog();
                 return true;
             case R.id.menu_deleteAll:
                 pushupViewModel.deleteAll();
@@ -104,10 +101,17 @@ public class PushupFragment extends Fragment {
         }
     }
 
-    public void openDialog(){
+    public void openEditDialog(Pushup pushup){
         FragmentManager manager = ((AppCompatActivity)this.getContext()).getSupportFragmentManager();
-        DialogFragment frag = new PushupsEditDialog();
-        frag.show(manager,"Hello");
+        DialogFragment frag = new PushupsEditDialog(pushup);
+        frag.show(manager,"Edit");
+    }
+
+
+    public void openAddDialog(){
+        FragmentManager manager = ((AppCompatActivity)this.getContext()).getSupportFragmentManager();
+        DialogFragment frag = new PushupsAddDialog();
+        frag.show(manager,"Add");
     }
 
 
