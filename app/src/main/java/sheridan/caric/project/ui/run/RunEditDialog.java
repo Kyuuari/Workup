@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Date;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -42,9 +44,9 @@ public class RunEditDialog extends DialogFragment {
             try {
                 input = a.findViewById(R.id.Amount);
                 aLong = Long.valueOf(input.getText().toString());
-
+                Date c = new Date();
                 long id = r.getId();
-                Run updateRun = new Run(aLong);
+                Run updateRun = new Run(aLong,c);
                 updateRun.setId(id);
 
                 runViewModel.update(updateRun);

@@ -1,5 +1,7 @@
 package sheridan.caric.project.db;
 
+import java.util.Date;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -12,14 +14,15 @@ public class Pushup {
     @ColumnInfo(name = "id")
     private long id =0;
 
-
-
     @ColumnInfo(name="amount")
     private long mAmount;
 
-    public Pushup(@NonNull long amount){this.mAmount=amount;}
+    @ColumnInfo(name="date")
+    private Date mDate;
 
-    public void setmAmount(long mAmount) {
+    public Pushup(@NonNull long amount,Date date){this.mAmount=amount; this.mDate=date;}
+
+    public void setAmount(long mAmount) {
         this.mAmount = mAmount;
     }
 
@@ -32,4 +35,8 @@ public class Pushup {
     public long getId() {
         return this.id;
     }
+
+    public void setDate(Date date){this.mDate=date;}
+
+    public Date getDate(){return this.mDate;}
 }

@@ -11,7 +11,16 @@
         android:background="#1E88E5"
         android:contentDescription="@string/app_name"
         android:scaleType="center"
-        android:src="@drawable/ic_add_24dp" />
+        android:src="@drawable/ic_fitness_24dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Completed Pushups"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/Amount"
@@ -23,4 +32,5 @@
         android:layout_marginBottom="4dp"
         android:hint="Amount"
         android:inputType="number" />
+
 </LinearLayout>

@@ -4,13 +4,18 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities ={Pushup.class,Run.class},version = 1,exportSchema = false)
+@TypeConverters({Converters.class})
 public abstract class WorkOutRoomDatabase extends RoomDatabase {
     public abstract PushupDao pushupDao();
     public abstract RunDao runDao();
@@ -56,6 +61,7 @@ public abstract class WorkOutRoomDatabase extends RoomDatabase {
         private final RunDao runDao;
         long[] pushes = {25,30,40,10};
         long[] runs = {25,43,10,12};
+        private Date date = new Date();
 
         PopulateDbAsync(WorkOutRoomDatabase db) {
             pushupDao = db.pushupDao();
@@ -69,12 +75,12 @@ public abstract class WorkOutRoomDatabase extends RoomDatabase {
             runDao.deleteAllRuns();
 
             for (int i = 0; i <= runs.length - 1; i++) {
-                Run run = new Run(runs[i]);
+                Run run = new Run(runs[i],date);
                 runDao.insert(run);
             }
 
             for (int i = 0; i <= pushes.length - 1; i++) {
-                Pushup pushup = new Pushup(pushes[i]);
+                Pushup pushup = new Pushup(pushes[i],date);
                 pushupDao.insert(pushup);
 //                Log.d("PushupID", "insert: " + pushup.getId());
             }

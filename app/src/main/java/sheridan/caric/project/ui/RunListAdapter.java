@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +25,7 @@ public class RunListAdapter extends RecyclerView.Adapter<RunListAdapter.RunViewH
 
     @Override
     public RunListAdapter.RunViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+        itemView = mInflater.inflate(R.layout.run_item, parent, false);
 //        itemView.setOnClickListener(v->openDialog());
         return new RunListAdapter.RunViewHolder(itemView);
     }
@@ -35,6 +36,10 @@ public class RunListAdapter extends RecyclerView.Adapter<RunListAdapter.RunViewH
             Run current = mRuns.get(position);
             holder.runItemView.setText(String.valueOf(current.getAmount()));
             holder.runItemView.setId(position);
+
+            SimpleDateFormat df = new SimpleDateFormat("MMM d h:mm a");
+            String formattedDate = df.format(current.getDate());
+            holder.dateItemView.setText(formattedDate);
 
             //bind holder with run
             holder.setRun(current);
@@ -68,11 +73,13 @@ public class RunListAdapter extends RecyclerView.Adapter<RunListAdapter.RunViewH
 
     public class RunViewHolder extends RecyclerView.ViewHolder {
         private final TextView runItemView;
+        private final TextView dateItemView;
         private Run run;
 
         private RunViewHolder(View itemView) {
             super(itemView);
             runItemView = itemView.findViewById(R.id.textView);
+            dateItemView= itemView.findViewById(R.id.textView2);
             itemView.setTag(this);
             itemView.setOnClickListener(mOnItemClickListener);
         }

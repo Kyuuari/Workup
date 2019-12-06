@@ -20,6 +20,8 @@ allprojects {
         jcenter()
         
     }
+    dependencies {
+    }
 }
 
 task clean(type: Delete) {

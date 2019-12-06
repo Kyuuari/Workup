@@ -10,6 +10,16 @@
         android:background="#FFFFBB33"
         android:contentDescription="@string/app_name" />
 
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Edit Run"
+        android:textSize="14sp" />
+
     <EditText
         android:id="@+id/Amount"
         android:layout_width="match_parent"

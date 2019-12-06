@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -35,7 +38,8 @@ public class PushupsAddDialog extends DialogFragment {
             try {
                 input = a.findViewById(R.id.Amount);
                 aLong = Long.valueOf(input.getText().toString());
-                pushupViewModel.insert(new Pushup(aLong));
+                Date c = new Date();
+                pushupViewModel.insert(new Pushup(aLong,c));
             } catch (Exception e) {
                 Toast.makeText(getContext(), "Invalid Input", Toast.LENGTH_SHORT).show();
             }

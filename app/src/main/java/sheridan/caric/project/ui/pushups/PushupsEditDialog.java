@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.zip.Inflater;
 
 import androidx.annotation.NonNull;
@@ -48,9 +50,9 @@ public class PushupsEditDialog extends DialogFragment {
             try {
                 input = a.findViewById(R.id.Amount);
                 aLong = Long.valueOf(input.getText().toString());
-
+                Date c = new Date();
                 long id = p.getId();
-                Pushup updatePushup = new Pushup(aLong);
+                Pushup updatePushup = new Pushup(aLong,c);
                 updatePushup.setId(id);
 
                 pushupViewModel.update(updatePushup);
